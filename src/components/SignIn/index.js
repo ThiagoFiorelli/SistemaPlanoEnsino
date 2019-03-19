@@ -59,7 +59,7 @@ class SignInFormBase extends Component {
           value={email}
           onChange={this.onChange}
           type="text"
-          placeholder="Endereço de EMail"
+          placeholder="Endereço de Email"
         />
         <input
           name="password"
@@ -72,7 +72,7 @@ class SignInFormBase extends Component {
           Entrar
         </button>
 
-        {errpr && <p>{error.message}</p>}
+        {error && <p>{error.message}</p>}
       </form>
     );
   }
@@ -83,6 +83,6 @@ const SignInForm = compose(
   withFirebase,
 )(SignInFormBase);
 
-export default SignInPAge;
+export default SignInPage;
 
 export { SignInForm };
