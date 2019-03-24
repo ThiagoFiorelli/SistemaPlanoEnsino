@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 
 class Dashboard extends Component {
   render() {
-    
-    // console.log(this.props);
     const { projects } = this.props;
     const { cursos } = this.props;
     
