@@ -10,6 +10,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url(/img/windows.jpg) no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+  background-color: #fff;
+  min-height: 100%;
 }
 
 code {
