@@ -4,8 +4,8 @@ import {NavLink} from 'react-router-dom';
 const SignedOutLinks = () => {
     return (
         <ul className="right">
-            <li><NavLink to='/'>Cadastrar</NavLink></li>
-            <li><NavLink to='/'>Entrar</NavLink></li>
+            <li><NavLink to='/signup'>Cadastrar</NavLink></li>
+            <li><NavLink to='/signin'>Entrar</NavLink></li>
         </ul>
     )
 }
