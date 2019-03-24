@@ -10,9 +10,9 @@ var config = {
     projectId: "sistemaplanoensino",
     storageBucket: "sistemaplanoensino.appspot.com",
     messagingSenderId: "133803901326"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
-  firebase.firestore().settings({timestampsInSnapshots: true});
+firebase.firestore().settings({ timestampsInSnapshots: true });
 
-  export default firebase;
+export default firebase;

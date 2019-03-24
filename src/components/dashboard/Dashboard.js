@@ -8,7 +8,7 @@ class Dashboard extends Component {
   render() {
     const { projects } = this.props;
     const { cursos } = this.props;
-    
+
     return (
       <div className="dashboard container">
         <div className="row">
