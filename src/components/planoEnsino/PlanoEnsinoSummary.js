@@ -1,10 +1,10 @@
 import React from 'react'
 
-const CursoSummary = ({curso}) => {
+const PlanoEnsinoSummary = ({planoensino}) => {
   return (
-    <div className="card z-depth-0 curso-summary">
+    <div className="card z-depth-0 planoensino-summary">
       <div className="card-content grey-text text-darken-3">
-        <span className="card-title ">{curso.nome}</span>
+        <span className="card-title ">{planoensino.nome}</span>
         <p>Posted by The Net Ninja</p>
         <p className="grey-text">3rd September, 2am</p>
       </div>
@@ -12,4 +12,4 @@ const CursoSummary = ({curso}) => {
   )
 }
 
-export default CursoSummary
+export default PlanoEnsinoSummary

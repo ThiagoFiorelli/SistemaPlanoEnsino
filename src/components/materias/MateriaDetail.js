@@ -5,7 +5,7 @@ const MateriaDetails = (props) => {
   const nome = props.match.params.nome;
 
   return (
-    <div className="container section project-details">
+    <div className="container section materia-details">
       <div className="card z-depth-0">
         <div className="card-content">
           <span className="card-title">{nome} {id}</span>

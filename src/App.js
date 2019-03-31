@@ -4,7 +4,9 @@ import Navbar from './components/layout/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import ProjectDetail from './components/projects/ProjectDetails';
 import CursoDetail from './components/cursos/CursoDetail';
-import CreateCurso from './components/cursos/CreateCurso'
+import CreateCurso from './components/cursos/CreateCurso';
+import PlanoEnsinoDetail from './components/planoEnsino/PlanoEnsinoDetail';
+import CreatePlanoEnsino from './components/planoEnsino/CreatePlanoEnsino';
 import MateriaDetail from './components/materias/MateriaDetail';
 import CreateMateria from './components/materias/CreateMateria';
 import SignIn from './components/auth/SignIn';
@@ -19,11 +21,13 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Dashboard} />
+            <Route path='/planoensino/:id' component={PlanoEnsinoDetail} />
             <Route path='/materia/:id' component={MateriaDetail} />
             <Route path='/curso/:id' component={CursoDetail} />
             <Route path='/project/:id' component={ProjectDetail} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
+            <Route path='/cadastroplanoensino' component={CreatePlanoEnsino} /> 
             <Route path='/cadastromateria' component={CreateMateria} /> 
             <Route path='/cadastrocurso' component={CreateCurso} />  
             <Route path='/create' component={CreateProject} />

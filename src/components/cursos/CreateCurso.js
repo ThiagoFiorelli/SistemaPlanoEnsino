@@ -15,6 +15,7 @@ class CreateCurso extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.createCurso(this.state);
+    this.props.history.push('/');
   }
   render() {
     return (

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
 import CursoList from '../cursos/CursoList';
+import PlanoEnsinoList from '../planoEnsino/PlanoEnsinoList';
 import MateriaList from '../materias/MateriaList';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -12,6 +13,7 @@ class Dashboard extends Component {
     const { projects } = this.props;
     const { cursos } = this.props;
     const { materias } = this.props;
+    const { planosensino } = this.props;
     console.log(this.props);
 
     return (
@@ -26,6 +28,9 @@ class Dashboard extends Component {
           <div className="col s12 m4">
             <MateriaList materias={materias} />
           </div>
+          <div className="col s12 m4">
+            <PlanoEnsinoList planosensino={planosensino} />
+          </div>
           <div className="col s12 m5 offset-m1">
             <Notifications />
           </div>
@@ -38,7 +43,9 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   return {
     projects: state.firestore.ordered.projects,
-    cursos: state.firestore.ordered.cursos
+    cursos: state.firestore.ordered.cursos,
+    materias: state.firestore.ordered.materias,
+    planosensino: state.firestore.ordered.planosensino
   }
 }
 
@@ -49,5 +56,11 @@ export default compose(
   ]),
   firestoreConnect([
     {collection: 'cursos'}
+  ]),
+  firestoreConnect([
+    {collection: 'materias'}
+  ]),
+  firestoreConnect([
+    {collection: 'planosensino'}
   ])
 )(Dashboard)

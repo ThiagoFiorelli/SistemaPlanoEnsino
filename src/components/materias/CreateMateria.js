@@ -15,6 +15,7 @@ class CreateMateria extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.createMateria(this.state);
+    this.props.history.push('/');
   }
   render() {
     return (

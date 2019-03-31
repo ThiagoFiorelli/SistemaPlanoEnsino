@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import 'react-dropdown/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
 const options = [
   { value: 'Administrador', label: 'Administrador' },
@@ -18,7 +20,8 @@ export default class SignUp extends Component {
     firstName: '',
     lastName: '',
     cpf: '',
-    cargo: ''
+    cargo: '',
+    cursos: ''
   }
 
   handleChangeOptions = (e) => {
@@ -39,6 +42,7 @@ export default class SignUp extends Component {
     console.log(e);
     e.preventDefault();
     console.log(this.state);
+    this.props.history.push('/');
   }
 
   render() {
@@ -84,6 +88,28 @@ export default class SignUp extends Component {
                 Professor
               </RadioButton>
             </RadioGroup>
+          </div>
+
+          <div className="input-field col-md-12">
+            <p>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Administrador</span>
+              </label>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Coordenador</span>
+              </label>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Professor</span>
+              </label>
+            </p>
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="cargo">Cursos</label><br/><br/>
+            <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
           </div>
 
           <div className="input-field">
