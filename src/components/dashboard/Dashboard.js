@@ -10,12 +10,7 @@ import { compose } from 'redux';
 
 class Dashboard extends Component {
   render() {
-    const { projects } = this.props;
-    const { cursos } = this.props;
-    const { materias } = this.props;
-    const { planosensino } = this.props;
-    console.log(this.props);
-
+    const { projects, cursos, materias, planosensino } = this.props;
     return (
       <div className="dashboard container">
         <div className="row">

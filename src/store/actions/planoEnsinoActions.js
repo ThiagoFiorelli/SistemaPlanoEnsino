@@ -15,3 +15,19 @@ export const createPlanoEnsino = (planoensino) => {
       });
     }
   };
+
+export const deletePlanoEnsino = (planoensino) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+       
+      // make async call to database
+      const firestore = getFirestore();
+      firestore.collection('planosensino').doc(planoensino).delete().then(() => {
+        dispatch({ type: 'DELETE_PLANO_ENSINO', planoensino });
+      }).catch((err) => {
+        dispatch({ type: 'DELETE_PLANO_ENSINO_ERROR', err });
+      });
+      
+      
+
+    }
+  };

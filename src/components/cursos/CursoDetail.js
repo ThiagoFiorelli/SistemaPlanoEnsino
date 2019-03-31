@@ -1,24 +1,50 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
-const CursoDetails = (props) => {
-  const id = props.match.params.id;
+const CursoDetail = (props) => {
+  const {curso} = props;
+  console.log(props);
+  if (curso) {
+    return (
+      <div className="container section curso-details">
+        <div className="card z-depth-0">
+          <div className="card-content">
+            <span className="card-title">{curso.nome}</span>
+            <p>{curso.descricao}</p>
+          </div>
 
-  return (
-    <div className="container section curso-details">
-      <div className="card z-depth-0">
-        <div className="card-content">
-          <span className="card-title">Titulo do projeto {id}</span>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae lorem eros. Praesent rutrum dui mauris, pellentesque congue orci hendrerit vitae. Aenean quis elit lobortis, vulputate sem et, pulvinar mi. Fusce egestas varius ligula, nec mollis sapien auctor at. Aliquam nisi magna, cursus eget consectetur in, mollis id neque. Etiam nunc diam, sodales non aliquam mattis, tempus ac arcu. Quisque elementum a orci vitae pretium.</p>
+          <div className="card-action grey lighten-4 grey-text">
+            <div>Postado por {curso.authorFirstName} {curso.authorLastName}</div>
+            <div>Uma data aqui</div>
+          </div>
+
         </div>
-
-        <div className="card-action grey lighten-4 grey-text">
-          <div>Postado por seila</div>
-          <div>Uma data aqui</div>
-        </div>
-
       </div>
-    </div>
-  )
+    )
+  } else {
+
+    return (
+      <div className="container center" >
+        <p>Carregando curso...</p>
+      </div>
+    )
+  }
 }
 
-export default CursoDetails
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  const cursos = state.firestore.data.cursos;
+  const curso = cursos ? cursos[id] : null;
+  return {
+    curso: curso,
+  }
+}
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{
+    collection: 'cursos'
+  }])
+)(CursoDetail)
