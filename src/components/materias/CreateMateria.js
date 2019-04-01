@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createCurso } from '../../store/actions/cursoActions'
+import { createMateria } from '../../store/actions/materiaActions'
 
-class CreateCurso extends Component {
+class CreateMateria extends Component {
   state = {
     nome: '',
-    descricao: ''
+    peso: ''
   }
   handleChange = (e) => {
     this.setState({
@@ -14,21 +14,21 @@ class CreateCurso extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.createCurso(this.state);
+    this.props.createMateria(this.state);
     this.props.history.push('/');
   }
   render() {
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Cadastro de Curso</h5>
+          <h5 className="grey-text text-darken-3">Cadastro de Matéria</h5>
           <div className="input-field">
-            <input type="text" id='nome' onChange={this.handleChange} />
+            <input type="text" id='nome' onChange={this.handleChange} required/>
             <label htmlFor="nome">Nome</label>
           </div>
           <div className="input-field">
-            <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
-            <label htmlFor="descricao">Descrição</label>
+            <input type="number" id="peso" className="materialize-number" min="0" max="10" onChange={this.handleChange} required></input>
+            <label htmlFor="peso">Peso</label>
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
@@ -41,8 +41,8 @@ class CreateCurso extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createCurso: (curso) => dispatch(createCurso(curso))
+    createMateria: (materia) => dispatch(createMateria(materia))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateCurso)
+export default connect(null, mapDispatchToProps)(CreateMateria)
