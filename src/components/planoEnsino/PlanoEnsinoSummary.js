@@ -2,24 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { deletePlanoEnsino } from '../../store/actions/planoEnsinoActions'
 import { Link } from 'react-router-dom';
+import moment from 'moment'
+import 'moment/locale/pt-br';
 
 class PlanoEnsinoSummary extends Component {
-
   handleDelete = (e) => {
     this.props.deletePlanoEnsino(this.props.planoensino.id);
   }
 
   render(){
     const {planoensino} = this.props;
-    const Timestamp = require('react-timestamp');
-        
     return (
       <div className="card z-depth-0 planoensino-summary">
         <Link to={'/planoensino/' + planoensino.id} key={planoensino.id}>
           <div className="card-content grey-text text-darken-3">
             <span className="card-title ">{planoensino.nome}</span>
             <p>Criado por {planoensino.authorFirstName}</p>
-             <Timestamp className="grey-text" time={planoensino.createdAt.seconds} precision={2} />
+            <p className="grey-text">{moment(planoensino.createdAt.toDate()).calendar()}</p>
           </div>
         </Link>
         <button onClick={this.handleDelete} className="btn waves-effect waves-light" name="action">

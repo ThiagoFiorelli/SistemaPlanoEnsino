@@ -29,7 +29,7 @@ export default class SignUp extends Component {
     this.setState({
         cargo: e
     });
-}
+  }
 
   handleChange = (e) => {
       console.log(e.target.id);

@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 import { createPlanoEnsino } from '../../store/actions/planoEnsinoActions'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
-
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
-const defaultOption = options[0]
+let options = [{value:'teste1',label:'teste1'},{value:'teste2',label:'teste2'}]
 
 class CreatePlanoEnsino extends Component {
   state = {
@@ -18,17 +14,24 @@ class CreatePlanoEnsino extends Component {
     descricao: '',
     materias: ''
   }
+  handleChangeOptions = (e) => {
+    this.setState({
+        materias: e.value.props.value
+    });
+  }
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
   handleSubmit = (e) => {
+    console.log(this.state);
     e.preventDefault();
     this.props.createPlanoEnsino(this.state);
     this.props.history.push('/');
   }
   render() {
+    const { materias } = this.props;
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -39,7 +42,7 @@ class CreatePlanoEnsino extends Component {
           </div>
           <div className="input-field">
             <label htmlFor="cargo">Matérias</label><br/><br/>
-            <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
+              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
           </div>
           <div className="input-field">
             <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
@@ -54,10 +57,23 @@ class CreatePlanoEnsino extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    materias: state.firestore.ordered.materias
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     createPlanoEnsino: (planoensino) => dispatch(createPlanoEnsino(planoensino))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreatePlanoEnsino)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'materias'
+  }])
+)(CreatePlanoEnsino)
+
+/*connect(null, mapDispatchToProps)(CreatePlanoEnsino)*/
