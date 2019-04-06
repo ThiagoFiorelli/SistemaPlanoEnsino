@@ -7,10 +7,14 @@ import MateriaList from '../materias/MateriaList';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { Redirect } from 'react-router-dom'
 
 class Dashboard extends Component {
   render() {
-    const { projects, cursos, materias, planosensino } = this.props;
+    const { projects, cursos, materias, planosensino, auth } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="dashboard container">
         <div className="row">
@@ -40,7 +44,8 @@ const mapStateToProps = (state) => {
     projects: state.firestore.ordered.projects,
     cursos: state.firestore.ordered.cursos,
     materias: state.firestore.ordered.materias,
-    planosensino: state.firestore.ordered.planosensino
+    planosensino: state.firestore.ordered.planosensino,
+    auth: state.firebase.auth
   }
 }
 
@@ -50,12 +55,12 @@ export default compose(
     { collection: 'projects' }
   ]),
   firestoreConnect([
-    {collection: 'cursos'}
+    { collection: 'cursos' }
   ]),
   firestoreConnect([
-    {collection: 'materias'}
+    { collection: 'materias' }
   ]),
   firestoreConnect([
-    {collection: 'planosensino'}
+    { collection: 'planosensino' }
   ])
 )(Dashboard)
