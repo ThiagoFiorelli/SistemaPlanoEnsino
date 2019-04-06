@@ -9,7 +9,7 @@ const initState = {
 const cursoReducer = (state = initState, action) => {
   switch (action.type) {
     case 'CREATE_CURSO':
-      console.log('create curso', action.project);
+      console.log('create curso', action.curso);
       return state;
     case 'CREATE_CURSO_ERROR':
       console.log('create project error', action.err);

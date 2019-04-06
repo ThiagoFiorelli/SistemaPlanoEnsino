@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import 'react-dropdown/style.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
-import Select from 'react-select';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const options = [
   { value: 'Administrador', label: 'Administrador' },
@@ -19,16 +20,19 @@ export default class SignUp extends Component {
     firstName: '',
     lastName: '',
     cpf: '',
-    cargo: ''
+    cargo: '',
+    cursos: ''
   }
 
   handleChangeOptions = (e) => {
     console.log(e);
-   
-}
+    this.setState({
+        cargo: e
+    });
+  }
 
   handleChange = (e) => {
-      console.log(e);
+      console.log(e.target.id);
       this.setState({
       [e.target.id]: e.target.value
     });
@@ -38,6 +42,7 @@ export default class SignUp extends Component {
     console.log(e);
     e.preventDefault();
     console.log(this.state);
+    this.props.history.push('/');
   }
 
   render() {
@@ -47,38 +52,69 @@ export default class SignUp extends Component {
           <h5 className="grey-text text-darken-3">Cadastrar</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={this.handleChange} />
+            <input type="email" id="email" onChange={this.handleChange} required/>
           </div>
 
           <div className="input-field">
             <label htmlFor="password">Senha</label>
-            <input type="password" id="password" onChange={this.handleChange} />
+            <input type="password" id="password" onChange={this.handleChange} required/>
           </div>
 
           <div className="input-field">
             <label htmlFor="firstName">Nome</label>
-            <input type="text" id="firstName" onChange={this.handleChange} />
+            <input type="text" id="firstName" onChange={this.handleChange} required/>
           </div>
 
           <div className="input-field">
             <label htmlFor="lastName">Sobrenome</label>
-            <input type="text" id="lastName" onChange={this.handleChange} />
+            <input type="text" id="lastName" onChange={this.handleChange} required/>
           </div>
 
           <div className="input-field">
             <label htmlFor="cpf">CPF</label>
-            <input type="text" id="cpf" onChange={this.handleChange} />
+            <input type="text" id="cpf" onChange={this.handleChange} required/>
           </div>
 
           <div className="input-field">
-            <label htmlFor="cargo">Cargo</label>
-            <Dropdown name="cargo" options={options} onChange={() => this.handleChangeOptions} value={defaultOption} placeholder="Selecione um cargo" />
-            <Select id="cargo" options={ options } oonChange={() =>this.handleChangeOptions}/>
+            <label htmlFor="cargo">Cargo</label><br/><br/>
+            <RadioGroup id="cargo" onChange={ this.handleChangeOptions } horizontal>
+              <RadioButton value="Administrador">
+                Administrador
+              </RadioButton>
+              <RadioButton value="Coordenador">
+                Coordenador
+              </RadioButton>
+              <RadioButton value="Professor">
+                Professor
+              </RadioButton>
+            </RadioGroup>
+          </div>
+
+          <div className="input-field col-md-12">
+            <p>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Administrador</span>
+              </label>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Coordenador</span>
+              </label>
+              <label className="input-field col-md-4">
+                <input type="checkbox" />
+                <span>Professor</span>
+              </label>
+            </p>
           </div>
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button>
+            <label htmlFor="cargo">Cursos</label><br/><br/>
+            <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
           </div>
+
+          <div className="input-field">
+            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button> 
+          </div> 
         </form>
       </div>
     )

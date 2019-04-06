@@ -1,12 +1,15 @@
 import React from 'react'
 import CursoSummary from './CursoSummary'
+import { Link } from 'react-router-dom';
 
 const CursoList = ({cursos}) => {
   return (
     <div className="curso-list section">
       { cursos && cursos.map(curso => {
         return (
-          <CursoSummary curso={curso} key={curso.id} />
+          <Link to={'/curso/' + curso.id} key={curso.id}>
+            <CursoSummary curso={curso} />
+          </Link>
         )
       })}  
     </div>
