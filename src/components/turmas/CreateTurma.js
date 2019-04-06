@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createMateria } from '../../store/actions/materiaActions'
-import { Redirect } from 'react-router-dom'
+import { createTurma } from '../../store/actions/turmaActions'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
+import { Redirect } from 'react-router-dom'
 
 const options = [
   { value: 'Administrador', label: 'Administrador' },
   { value: 'Coordenador', label: 'Coordenador' },
   { value: 'Professor', label: 'Professor' }
 ]
-class CreateMateria extends Component {
+class CreateTurma extends Component {
   state = {
-    nome: '',
-    semestre: '',
-    peso: '',
-    turmas: ''
+    codigoTurma: '',
+    professor: ''
   }
   handleChange = (e) => {
     this.setState({
@@ -24,31 +22,24 @@ class CreateMateria extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.createMateria(this.state);
+    this.props.createTurma(this.state);
     this.props.history.push('/');
   }
   render() {
     const { auth } = this.props;
+
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Cadastro de Matéria</h5>
+          <h5 className="grey-text text-darken-3">Cadastro de Turma</h5>
           <div className="input-field">
-            <input type="text" id='nome' onChange={this.handleChange} required />
-            <label htmlFor="nome">Nome</label>
+            <input type="text" id='codigoTurma' onChange={this.handleChange} />
+            <label htmlFor="codigoTurma">Código da Turma</label>
           </div>
           <div className="input-field">
-            <input type="text" id="semestre" onChange={this.handleChange} required></input>
-            <label htmlFor="peso">Semestre</label>
-          </div>
-          <div className="input-field">
-            <input type="number" id="peso" className="materialize-number" min="0" max="10" onChange={this.handleChange} required></input>
-            <label htmlFor="peso">Peso</label>
-          </div>
-          <div className="input-field">
-            <label htmlFor="cargo">Turma</label><br/><br/>
+            <label htmlFor="cargo">Professor</label><br/><br/>
               <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
           </div>
           <div className="input-field">
@@ -67,8 +58,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    createMateria: (materia) => dispatch(createMateria(materia))
+    createTurma: (turma) => dispatch(createTurma(turma))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMateria)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTurma)

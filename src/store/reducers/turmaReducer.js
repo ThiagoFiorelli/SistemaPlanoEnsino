@@ -6,23 +6,23 @@ const initState = {
   ]
 }
 
-const cursoReducer = (state = initState, action) => {
+const turmaReducer = (state = initState, action) => {
   switch (action.type) {
-    case 'CREATE_CURSO':
-      console.log('create curso', action.curso);
+    case 'CREATE_TURMA':
+      console.log('create turma', action.turma);
       return state;
-    case 'CREATE_CURSO_ERROR':
+    case 'CREATE_TURMA_ERROR':
       console.log('create project error', action.err);
       return state;
-    case 'DELETE_CURSO':
-      console.log('delete curso', action.curso);
+    case 'DELETE_TURMA':
+      console.log('delete turma', action.turma);
       return state;
-    case 'DELETE_CURSO_ERROR':
-      console.log('delete curso error', action.err);
+    case 'DELETE_TURMA_ERROR':
+      console.log('delete turma error', action.err);
       return state;
     default:
       return state;
   }
 };
 
-export default cursoReducer;
+export default turmaReducer;

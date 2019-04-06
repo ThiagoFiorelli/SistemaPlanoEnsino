@@ -32,9 +32,8 @@ class CreatePlanoEnsino extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { materias } = this.props;
-    console.log(materias);
     const { auth, materias } = this.props;
+    console.log(materias);
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (

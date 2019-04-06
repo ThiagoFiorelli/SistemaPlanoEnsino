@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/actions/authActions';
-
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
-const defaultOption = options[0]
-
 
 class SignUp extends Component {
   state = {
