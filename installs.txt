@@ -1,1 +1,1 @@
-npm install react react-redux firebase bootstrap react-dom redux-thunk redux-firestore react-redux-firebase
+npm install react react-redux firebase bootstrap react-dom redux-thunk redux-firestore react-redux-firebase moment

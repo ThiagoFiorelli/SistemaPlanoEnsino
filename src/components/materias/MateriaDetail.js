@@ -1,8 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
+import { Redirect } from 'react-router-dom'
 
 const MateriaDetails = (props) => {
   const id = props.match.params.id;
   const nome = props.match.params.nome;
+  const { auth } = props;
+  if (!auth.uid) return <Redirect to='/signin' />
 
   return (
     <div className="container section materia-details">
@@ -22,4 +28,19 @@ const MateriaDetails = (props) => {
   )
 }
 
-export default MateriaDetails
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  const projects = state.firestore.data.projects;
+  const project = projects ? projects[id] : null;
+  return {
+    project: project,
+    auth: state.firebase.auth
+  }
+}
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{
+    collection: 'materias'
+  }])
+)(MateriaDetails)

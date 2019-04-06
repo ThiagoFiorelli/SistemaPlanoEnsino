@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
   project: projectReducer,
   curso: cursoReducer,
   materia: materiaReducer,
+  firebase: firebaseReducer,
   firestore: firestoreReducer
 });
 

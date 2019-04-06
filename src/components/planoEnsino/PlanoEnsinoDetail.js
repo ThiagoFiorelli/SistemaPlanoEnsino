@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
 
 class PlanoEnsinoDetail extends Component {
-  
-  render(){
-    console.log(this.props);
-    const {planoensino} = this.props;
+
+  render() {
+    const { auth, planoensino } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+
     if (planoensino) {
       return (
         <div className="container section planoensino-details">
@@ -16,17 +19,17 @@ class PlanoEnsinoDetail extends Component {
               <span className="card-title">{planoensino.nome}</span>
               <p>{planoensino.descricao}</p>
             </div>
-  
+
             <div className="card-action grey lighten-4 grey-text">
               <div>Postado por {planoensino.authorFirstName} {planoensino.authorLastName}</div>
               <div>Uma data aqui</div>
             </div>
-  
+
           </div>
         </div>
       )
     } else {
-  
+
       return (
         <div className="container center" >
           <p>Carregando plano de ensino...</p>
@@ -35,7 +38,7 @@ class PlanoEnsinoDetail extends Component {
     }
   }
 
- 
+
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -44,6 +47,7 @@ const mapStateToProps = (state, ownProps) => {
   const planoensino = planosensino ? planosensino[id] : null;
   return {
     planoensino: planoensino,
+    auth: state.firebase.auth
   }
 }
 

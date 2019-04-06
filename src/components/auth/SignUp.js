@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import 'react-dropdown/style.css'
+import React, { Component } from 'react';
+import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const options = [
   { value: 'Administrador', label: 'Administrador' },
@@ -13,7 +15,7 @@ const options = [
 const defaultOption = options[0]
 
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   state = {
     email: '',
     password: '',
@@ -27,13 +29,13 @@ export default class SignUp extends Component {
   handleChangeOptions = (e) => {
     console.log(e);
     this.setState({
-        cargo: e
+      cargo: e
     });
   }
 
   handleChange = (e) => {
-      console.log(e.target.id);
-      this.setState({
+    console.log(e.target.id);
+    this.setState({
       [e.target.id]: e.target.value
     });
   }
@@ -46,38 +48,42 @@ export default class SignUp extends Component {
   }
 
   render() {
+    const { auth } = this.props;
+
+    if (auth.uid) return <Redirect to='/' />
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="white">
           <h5 className="grey-text text-darken-3">Cadastrar</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={this.handleChange} required/>
+            <input type="email" id="email" onChange={this.handleChange} required />
           </div>
 
           <div className="input-field">
             <label htmlFor="password">Senha</label>
-            <input type="password" id="password" onChange={this.handleChange} required/>
+            <input type="password" id="password" onChange={this.handleChange} required />
           </div>
 
           <div className="input-field">
             <label htmlFor="firstName">Nome</label>
-            <input type="text" id="firstName" onChange={this.handleChange} required/>
+            <input type="text" id="firstName" onChange={this.handleChange} required />
           </div>
 
           <div className="input-field">
             <label htmlFor="lastName">Sobrenome</label>
-            <input type="text" id="lastName" onChange={this.handleChange} required/>
+            <input type="text" id="lastName" onChange={this.handleChange} required />
           </div>
 
           <div className="input-field">
             <label htmlFor="cpf">CPF</label>
-            <input type="text" id="cpf" onChange={this.handleChange} required/>
+            <input type="text" id="cpf" onChange={this.handleChange} required />
           </div>
 
           <div className="input-field">
-            <label htmlFor="cargo">Cargo</label><br/><br/>
-            <RadioGroup id="cargo" onChange={ this.handleChangeOptions } horizontal>
+            <label htmlFor="cargo">Cargo</label><br /><br />
+            <RadioGroup id="cargo" onChange={this.handleChangeOptions} horizontal>
               <RadioButton value="Administrador">
                 Administrador
               </RadioButton>
@@ -108,15 +114,23 @@ export default class SignUp extends Component {
           </div>
 
           <div className="input-field">
-            <label htmlFor="cargo">Cursos</label><br/><br/>
+            <label htmlFor="cargo">Cursos</label><br /><br />
             <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
           </div>
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button> 
-          </div> 
+            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button>
+          </div>
         </form>
       </div>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
+
+export default connect(mapStateToProps)(SignUp)
