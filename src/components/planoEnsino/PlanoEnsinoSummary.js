@@ -4,14 +4,18 @@ import { deletePlanoEnsino } from '../../store/actions/planoEnsinoActions'
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 import 'moment/locale/pt-br';
+import { Redirect } from 'react-router-dom';
 
 class PlanoEnsinoSummary extends Component {
   handleDelete = (e) => {
     this.props.deletePlanoEnsino(this.props.planoensino.id);
   }
 
-  render(){
-    const {planoensino} = this.props;
+  render() {
+    const { auth, planoensino } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="card z-depth-0 planoensino-summary">
         <Link to={'/planoensino/' + planoensino.id} key={planoensino.id}>
@@ -29,10 +33,15 @@ class PlanoEnsinoSummary extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     deletePlanoEnsino: (planoensino) => dispatch(deletePlanoEnsino(planoensino))
   }
 }
 
-export default connect(null, mapDispatchToProps)(PlanoEnsinoSummary)
+export default connect(mapStateToProps, mapDispatchToProps)(PlanoEnsinoSummary)

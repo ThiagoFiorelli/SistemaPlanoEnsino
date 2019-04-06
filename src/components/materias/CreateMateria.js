@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createMateria } from '../../store/actions/materiaActions'
+import { Redirect } from 'react-router-dom'
 
 class CreateMateria extends Component {
   state = {
@@ -20,12 +21,15 @@ class CreateMateria extends Component {
     this.props.history.push('/');
   }
   render() {
+    const { auth } = this.props;
+    if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Cadastro de Matéria</h5>
           <div className="input-field">
-            <input type="text" id='nome' onChange={this.handleChange} required/>
+            <input type="text" id='nome' onChange={this.handleChange} required />
             <label htmlFor="nome">Nome</label>
           </div>
           <div className="input-field">
@@ -49,10 +53,15 @@ class CreateMateria extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     createMateria: (materia) => dispatch(createMateria(materia))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateMateria)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMateria)

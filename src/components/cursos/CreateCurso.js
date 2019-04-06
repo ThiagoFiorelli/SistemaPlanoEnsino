@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { createCurso } from '../../store/actions/cursoActions'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
+import { Redirect } from 'react-router-dom'
 
 const options = [
   { value: 'Administrador', label: 'Administrador' },
@@ -25,6 +26,10 @@ class CreateCurso extends Component {
     this.props.history.push('/');
   }
   render() {
+    const { auth } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -54,10 +59,15 @@ class CreateCurso extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     createCurso: (curso) => dispatch(createCurso(curso))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateCurso)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCurso)
