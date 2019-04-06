@@ -1,17 +1,6 @@
 import React, { Component } from 'react'
 import 'react-dropdown/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
-
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
-const defaultOption = options[0]
-
 
 export default class SignUp extends Component {
   state = {
@@ -21,7 +10,6 @@ export default class SignUp extends Component {
     lastName: '',
     cpf: '',
     cargo: '',
-    cursos: ''
   }
 
   handleChangeOptions = (e) => {
@@ -77,7 +65,25 @@ export default class SignUp extends Component {
 
           <div className="input-field">
             <label htmlFor="cargo">Cargo</label><br/><br/>
-            <RadioGroup id="cargo" onChange={ this.handleChangeOptions } horizontal>
+            <div className="input-field col-md-12">
+              <p>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" />
+                  <span>Administrador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" />
+                  <span>Coordenador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" />
+                  <span>Professor</span>
+                </label>
+              </p>
+            </div>
+          </div>
+
+          {/* <RadioGroup id="cargo" onChange={ this.handleChangeOptions } horizontal>
               <RadioButton value="Administrador">
                 Administrador
               </RadioButton>
@@ -87,30 +93,13 @@ export default class SignUp extends Component {
               <RadioButton value="Professor">
                 Professor
               </RadioButton>
-            </RadioGroup>
-          </div>
+            </RadioGroup> */}
+         
 
-          <div className="input-field col-md-12">
-            <p>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Administrador</span>
-              </label>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Coordenador</span>
-              </label>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Professor</span>
-              </label>
-            </p>
-          </div>
-
-          <div className="input-field">
+          {/* <div className="input-field">
             <label htmlFor="cargo">Cursos</label><br/><br/>
             <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
-          </div>
+          </div> */}
 
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">Cadastrar</button> 

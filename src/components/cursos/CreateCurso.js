@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createCurso } from '../../store/actions/cursoActions'
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
+const options = [
+  { value: 'Administrador', label: 'Administrador' },
+  { value: 'Coordenador', label: 'Coordenador' },
+  { value: 'Professor', label: 'Professor' }
+]
 class CreateCurso extends Component {
   state = {
     nome: '',
@@ -29,6 +36,14 @@ class CreateCurso extends Component {
           <div className="input-field">
             <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
             <label htmlFor="descricao">Descrição</label>
+          </div>
+          <div className="input-field">
+            <label htmlFor="cargo">Matérias</label><br/><br/>
+              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+          </div>
+          <div className="input-field">
+            <label htmlFor="cargo">Coordenador</label><br/><br/>
+              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>

@@ -32,6 +32,7 @@ class CreatePlanoEnsino extends Component {
   }
   render() {
     const { materias } = this.props;
+    console.log(materias);
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>

@@ -5,7 +5,9 @@ import { createMateria } from '../../store/actions/materiaActions'
 class CreateMateria extends Component {
   state = {
     nome: '',
-    peso: ''
+    semestre: '',
+    peso: '',
+    turmas: ''
   }
   handleChange = (e) => {
     this.setState({
@@ -27,8 +29,16 @@ class CreateMateria extends Component {
             <label htmlFor="nome">Nome</label>
           </div>
           <div className="input-field">
+            <input type="text" id="semestre" onChange={this.handleChange} required></input>
+            <label htmlFor="peso">Semestre</label>
+          </div>
+          <div className="input-field">
             <input type="number" id="peso" className="materialize-number" min="0" max="10" onChange={this.handleChange} required></input>
             <label htmlFor="peso">Peso</label>
+          </div>
+          <div className="input-field">
+            <input type="number" id="turma" className="materialize-number" min="0" max="10" onChange={this.handleChange} required></input>
+            <label htmlFor="peso">Turma</label>
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
