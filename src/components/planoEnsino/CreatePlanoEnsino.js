@@ -5,8 +5,9 @@ import { compose } from 'redux';
 import { createPlanoEnsino } from '../../store/actions/planoEnsinoActions'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
+import { Redirect } from 'react-router-dom';
 
-let options = [{value:'teste1',label:'teste1'},{value:'teste2',label:'teste2'}]
+let options = [{ value: 'teste1', label: 'teste1' }, { value: 'teste2', label: 'teste2' }]
 
 class CreatePlanoEnsino extends Component {
   state = {
@@ -16,7 +17,7 @@ class CreatePlanoEnsino extends Component {
   }
   handleChangeOptions = (e) => {
     this.setState({
-        materias: e.value.props.value
+      materias: e.value.props.value
     });
   }
   handleChange = (e) => {
@@ -31,7 +32,10 @@ class CreatePlanoEnsino extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { materias } = this.props;
+    const { auth, materias } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -41,8 +45,8 @@ class CreatePlanoEnsino extends Component {
             <label htmlFor="nome">Nome</label>
           </div>
           <div className="input-field">
-            <label htmlFor="cargo">Matérias</label><br/><br/>
-              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+            <label htmlFor="cargo">Matérias</label><br /><br />
+            <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
           </div>
           <div className="input-field">
             <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
@@ -59,7 +63,8 @@ class CreatePlanoEnsino extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    materias: state.firestore.ordered.materias
+    materias: state.firestore.ordered.materias,
+    auth: state.firebase.auth
   }
 }
 
