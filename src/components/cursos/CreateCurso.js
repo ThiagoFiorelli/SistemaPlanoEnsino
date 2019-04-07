@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createCurso } from '../../store/actions/cursoActions'
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import Select from 'react-select'
 import { Redirect } from 'react-router-dom'
 
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
+let options = []
+var entrou = false
 class CreateCurso extends Component {
   state = {
     nome: '',
-    descricao: ''
+    descricao: '',
+    coordenador: ''
+  }
+  handleChangeOptions = (e) => {
+    this.setState({
+      coordenador: e.label
+    });
   }
   handleChange = (e) => {
     this.setState({
@@ -26,7 +30,14 @@ class CreateCurso extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props;
+    const { auth, coordenadores } = this.props;
+
+    if(coordenadores && !entrou){
+      coordenadores.map(coordenador =>{
+        options = [...options,{value: coordenador.id, label: coordenador.nome}]
+      });
+      entrou = true
+    }
 
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -43,12 +54,8 @@ class CreateCurso extends Component {
             <label htmlFor="descricao">Descrição</label>
           </div>
           <div className="input-field">
-            <label htmlFor="cargo">Matérias</label><br/><br/>
-              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
-          </div>
-          <div className="input-field">
             <label htmlFor="cargo">Coordenador</label><br/><br/>
-              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+              <Select options={options} onChange={this.handleChangeOptions}/>
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
@@ -61,6 +68,7 @@ class CreateCurso extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    coordenadores: state.firestore.ordered.usuarios,
     auth: state.firebase.auth
   }
 }
@@ -70,4 +78,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCurso)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'usuarios',
+  }])
+)(CreateCurso)

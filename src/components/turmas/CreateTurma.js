@@ -2,18 +2,41 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createTurma } from '../../store/actions/turmaActions'
 import Dropdown from 'react-dropdown'
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
+import Select from 'react-select'
 import 'react-dropdown/style.css'
 import { Redirect } from 'react-router-dom'
 
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
+const optionsPeriodo = [
+  { value: 'Matutino', label: 'Matutino' },
+  { value: 'Vespertino', label: 'Vespertino' },
+  { value: 'Noturno', label: 'Noturno' }
 ]
+var entrou = false
+let optionsMateria = []
+let optionsProfessor = []
 class CreateTurma extends Component {
   state = {
     codigoTurma: '',
-    professor: ''
+    professor: '',
+    periodo: '',
+    materia: ''
+  }
+  handleChangeOptionsM = (e) => {
+    this.setState({
+    materia: e.label
+    });
+  }
+  handleChangeOptionsPro = (e) => {
+    this.setState({
+    professor: e.label
+    });
+  }
+  handleChangeOptionsPe = (e) => {
+    this.setState({
+    periodo: e.label
+    });
   }
   handleChange = (e) => {
     this.setState({
@@ -26,7 +49,21 @@ class CreateTurma extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props;
+    const { auth, materias, professores } = this.props;
+
+    if(materias && !entrou){
+      materias.map(materia =>{
+        optionsMateria = [...optionsMateria,{value: materia.id, label: materia.nome}]
+      });
+      entrou = true
+    }
+
+    if(professores && !entrou){
+      professores.map(professor =>{
+        optionsProfessor = [...optionsProfessor,{value: professor.id, label: professor.nome}]
+      });
+      entrou = true
+    }
 
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -40,7 +77,15 @@ class CreateTurma extends Component {
           </div>
           <div className="input-field">
             <label htmlFor="cargo">Professor</label><br/><br/>
-              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+              <Select options={optionsProfessor} onChange={this.handleChangeOptionsPro}/>
+          </div>
+          <div className="input-field">
+            <label htmlFor="cargo">Período</label><br/><br/>
+              <Select options={optionsPeriodo} onChange={this.handleChangeOptionsPe}/>
+          </div>
+          <div className="input-field">
+            <label htmlFor="cargo">Matéria</label><br/><br/>
+              <Select options={optionsMateria} onChange={this.handleChangeOptionsM}/> 
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
@@ -52,8 +97,11 @@ class CreateTurma extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    materias: state.firestore.ordered.materias,
+    professores: state.firestore.ordered.usuarios
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -62,4 +110,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTurma)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'materias'
+  }]),
+  firestoreConnect([{
+    collection: 'usuarios'
+  }])
+)(CreateTurma)

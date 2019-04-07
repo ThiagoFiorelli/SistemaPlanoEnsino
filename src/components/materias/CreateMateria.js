@@ -2,20 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createMateria } from '../../store/actions/materiaActions'
 import { Redirect } from 'react-router-dom'
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import Select from 'react-select'
 
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
+let options = []
+var entrou = false
 class CreateMateria extends Component {
   state = {
     nome: '',
     semestre: '',
     peso: '',
-    turmas: ''
+    cursos: ''
+  }
+  handleChangeOptions = (e) => {
+    this.setState({
+      coordenador: e.label
+    });
   }
   handleChange = (e) => {
     this.setState({
@@ -28,7 +31,15 @@ class CreateMateria extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props;
+    const { auth, cursos } = this.props;
+
+    if(cursos && !entrou){
+      cursos.map(curso =>{
+        options = [...options,{value: curso.id, label: curso.nome}]
+      });
+      entrou = true
+    }
+    
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
@@ -48,8 +59,8 @@ class CreateMateria extends Component {
             <label htmlFor="peso">Peso</label>
           </div>
           <div className="input-field">
-            <label htmlFor="cargo">Turma</label><br/><br/>
-              <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+            <label htmlFor="cargo">Cursos</label><br/><br/>
+              <Select options={options} onChange={this.handleChangeOptions}/>
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
@@ -62,6 +73,7 @@ class CreateMateria extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    cursos: state.firestore.ordered.cursos,
     auth: state.firebase.auth
   }
 }
@@ -71,4 +83,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMateria)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'cursos',
+  }])
+)(CreateMateria)

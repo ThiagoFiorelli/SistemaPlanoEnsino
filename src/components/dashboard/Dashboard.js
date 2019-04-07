@@ -24,7 +24,7 @@ class Dashboard extends Component {
             <TurmaList turmas={turmas} />
           </div>
           <div className="col s12 m4">
-            <h2 className="center"><i className="material-icons">library_books</i> Materias</h2>
+            <h2 className="center"><i className="material-icons">library_books</i> Matérias</h2>
             <MateriaList materias={materias} />
           </div>
           <div className="col s12 m4">
