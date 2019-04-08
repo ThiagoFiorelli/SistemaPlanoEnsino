@@ -53,7 +53,7 @@ class CreatePlanoEnsino extends Component {
             <label htmlFor="descricao">Descrição do semestre</label>
           </div>
           <div className="input-field">
-            <button className="btn pink lighten-1">Criar</button>
+            <button className="btn blue darken-3">Criar</button>
           </div>
         </form>
       </div>
