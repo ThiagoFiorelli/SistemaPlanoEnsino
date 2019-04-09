@@ -72,19 +72,19 @@ class SignUp extends Component {
           </div>
 
           <div className="input-field">
-            <label htmlFor="cargo">Cargo</label><br/><br/>
+            <label htmlFor="cargo">Cargo</label><br /><br />
             <div className="input-field col-md-12">
               <div id="cargo" className="radio-buttons" onChange={this.handleChangeOptions}>
                 <label className="input-field col-md-4">
-                  <input type="radio" value="Administrador" name="cargo"/>
+                  <input type="radio" value="Administrador" name="cargo" />
                   <span>Administrador</span>
                 </label>
                 <label className="input-field col-md-4">
-                  <input type="radio" value="Coordenador" name="cargo"/>
+                  <input type="radio" value="Coordenador" name="cargo" />
                   <span>Coordenador</span>
                 </label>
                 <label className="input-field col-md-4">
-                  <input type="radio" value="Professor" name="cargo"/>
+                  <input type="radio" value="Professor" name="cargo" />
                   <span>Professor</span>
                 </label>
 
@@ -118,7 +118,7 @@ class SignUp extends Component {
                 Professor
               </RadioButton>
             </RadioGroup> */}
-         
+
 
           {/* <div className="input-field">
             <label htmlFor="cargo">Cursos</label><br/><br/>
