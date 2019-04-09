@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom'
+import moment from 'moment';
 
 const TurmaDetail = (props) => {
   const { turma, auth } = props;
@@ -16,6 +17,7 @@ const TurmaDetail = (props) => {
           <div className="card-content">
             <span className="card-title">{turma.codigoTurma}</span>
           </div>
+
           <div className="card-content">
             <label>Professor:</label>
             <p>{turma.professor}</p>
@@ -28,9 +30,10 @@ const TurmaDetail = (props) => {
             <label>Matéria:</label>
             <p>{turma.materia}</p>
           </div>
+
           <div className="card-action grey lighten-4 grey-text">
             <div>Postado por {turma.authorFirstName} {turma.authorLastName}</div>
-            <div>Uma data aqui</div>
+            <div>{moment(turma.createdAt.toDate()).calendar()}</div>
           </div>
 
         </div>

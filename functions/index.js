@@ -44,7 +44,7 @@ exports.cursoCreated = functions.firestore.document('cursos/{cursoId}').onCreate
     return createNotification(notification);
 })
 
-exports.turmaCreated = functions.firestore.document('turma/{turmaId}').onCreate(doc => {
+exports.turmaCreated = functions.firestore.document('turmas/{turmaId}').onCreate(doc => {
     const project = doc.data();
     const notification = {
         content: 'Adicionou uma turma',

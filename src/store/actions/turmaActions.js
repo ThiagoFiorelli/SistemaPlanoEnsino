@@ -4,9 +4,9 @@ export const createTurma = (turma) => {
     const firestore = getFirestore();
     firestore.collection('turmas').add({
       ...turma,
-      authorFirstName: 'Net',
-      authorLastName: 'Ninja',
-      authorId: 12345,
+      authorFirstName: profile.nome,
+      authorLastName: profile.sobrenome,
+      authorId: authorId,
       createdAt: new Date()
     }).then(() => {
       dispatch({ type: 'CREATE_TURMA', turma });
@@ -18,7 +18,7 @@ export const createTurma = (turma) => {
 
 export const deleteTurma = (turma) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-     
+
     // make async call to database
     const firestore = getFirestore();
     firestore.collection('turmas').doc(turma).delete().then(() => {
@@ -26,6 +26,6 @@ export const deleteTurma = (turma) => {
     }).catch((err) => {
       dispatch({ type: 'DELETE_TURMA_ERROR', err });
     });
- 
+
   }
 };

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 class PlanoEnsinoDetail extends Component {
 
@@ -22,7 +23,7 @@ class PlanoEnsinoDetail extends Component {
 
             <div className="card-action grey lighten-4 grey-text">
               <div>Postado por {planoensino.authorFirstName} {planoensino.authorLastName}</div>
-              <div>Uma data aqui</div>
+              <div>{moment(planoensino.createdAt.toDate()).calendar()}</div>
             </div>
 
           </div>

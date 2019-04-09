@@ -2,38 +2,58 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const MateriaDetails = (props) => {
-  const id = props.match.params.id;
-  const nome = props.match.params.nome;
-  const { auth } = props;
+  const { auth, materia } = props;
+
   if (!auth.uid) return <Redirect to='/signin' />
 
-  return (
-    <div className="container section materia-details">
-      <div className="card z-depth-0">
-        <div className="card-content">
-          <span className="card-title">{nome} {id}</span>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae lorem eros. Praesent rutrum dui mauris, pellentesque congue orci hendrerit vitae. Aenean quis elit lobortis, vulputate sem et, pulvinar mi. Fusce egestas varius ligula, nec mollis sapien auctor at. Aliquam nisi magna, cursus eget consectetur in, mollis id neque. Etiam nunc diam, sodales non aliquam mattis, tempus ac arcu. Quisque elementum a orci vitae pretium.</p>
-        </div>
+  if (materia) {
+    return (
+      <div className="container section materia-details">
+        <div className="card z-depth-0">
+          <div className="card-content">
+            <span className="card-title">{materia.nome}</span>
+          </div>
+          <div className="card-content">
+            <label>Peso:</label>
+            <p>{materia.peso}</p>
+          </div>
+          <div className="card-content">
+            <label>Semestre:</label>
+            <p>{materia.semestre}</p>
+          </div>
+          <div className="card-content">
+            <label>Cursos:</label>
+            <p>{materia.cursos}</p>
+          </div>
 
-        <div className="card-action grey lighten-4 grey-text">
-          <div>Postado por seila</div>
-          <div>Uma data aqui</div>
-        </div>
+          <div className="card-action grey lighten-4 grey-text">
+            <div>Postado por {materia.authorFirstName} {materia.authorLastName}</div>
+            <div>{moment(materia.createdAt.toDate()).calendar()}</div>
+          </div>
 
+        </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+
+    return (
+      <div className="container center" >
+        <p>Carregando materia...</p>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
-  const projects = state.firestore.data.projects;
-  const project = projects ? projects[id] : null;
+  const materias = state.firestore.data.materias;
+  const materia = materias ? materias[id] : null;
   return {
-    project: project,
+    materia: materia,
     auth: state.firebase.auth
   }
 }

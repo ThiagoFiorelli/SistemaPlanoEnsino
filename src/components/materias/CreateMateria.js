@@ -17,7 +17,7 @@ class CreateMateria extends Component {
   }
   handleChangeOptions = (e) => {
     this.setState({
-      coordenador: e.label
+      cursos: e.label
     });
   }
   handleChange = (e) => {
