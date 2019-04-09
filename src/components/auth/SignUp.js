@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/actions/authActions';
-
-const options = [
-  { value: 'Administrador', label: 'Administrador' },
-  { value: 'Coordenador', label: 'Coordenador' },
-  { value: 'Professor', label: 'Professor' }
-]
-const defaultOption = options[0]
-
 
 class SignUp extends Component {
   state = {
@@ -24,13 +14,12 @@ class SignUp extends Component {
     lastName: '',
     cpf: '',
     cargo: '',
-    cursos: ''
   }
 
   handleChangeOptions = (e) => {
-    console.log(e);
+    console.log(e.target.value);
     this.setState({
-      cargo: e
+      cargo: e.target.value
     });
   }
 
@@ -83,6 +72,40 @@ class SignUp extends Component {
           </div>
 
           <div className="input-field">
+            <label htmlFor="cargo">Cargo</label><br/><br/>
+            <div className="input-field col-md-12">
+              <div id="cargo" className="radio-buttons" onChange={this.handleChangeOptions}>
+                <label className="input-field col-md-4">
+                  <input type="radio" value="Administrador" name="cargo"/>
+                  <span>Administrador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="radio" value="Coordenador" name="cargo"/>
+                  <span>Coordenador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="radio" value="Professor" name="cargo"/>
+                  <span>Professor</span>
+                </label>
+
+                {/* <label className="input-field col-md-4">
+                  <input type="checkbox" value="Administrador" name="cargo"/>
+                  <span>Administrador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" value="Coordenador" name="cargo"/>
+                  <span>Coordenador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" value="Professor" name="cargo"/>
+                  <span>Professor</span>
+                </label> */}
+
+              </div>
+            </div>
+          </div>
+
+          {/* <RadioGroup id="cargo" onChange={ this.handleChangeOptions } horizontal>
             <label htmlFor="cargo">Cargo</label><br /><br />
             <RadioGroup id="cargo" onChange={this.handleChangeOptions} horizontal>
               <RadioButton value="Administrador">
@@ -94,33 +117,18 @@ class SignUp extends Component {
               <RadioButton value="Professor">
                 Professor
               </RadioButton>
-            </RadioGroup>
-          </div>
+            </RadioGroup> */}
+         
 
-          <div className="input-field col-md-12">
-            <p>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Administrador</span>
-              </label>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Coordenador</span>
-              </label>
-              <label className="input-field col-md-4">
-                <input type="checkbox" />
-                <span>Professor</span>
-              </label>
-            </p>
-          </div>
-
+          {/* <div className="input-field">
+            <label htmlFor="cargo">Cursos</label><br/><br/>
           <div className="input-field">
             <label htmlFor="cargo">Cursos</label><br /><br />
             <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
-          </div>
+          </div> */}
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Cadastrar</button>
+            <button className="waves-effect waves-light btn blue-grey lighten-4">Cadastrar</button>
             <div className="red-text center">
               {authError ? <p>{authError}</p> : null}
             </div>

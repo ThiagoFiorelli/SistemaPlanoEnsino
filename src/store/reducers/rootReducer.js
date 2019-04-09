@@ -2,6 +2,7 @@ import authReducer from './authReducer'
 import projectReducer from './projectReducer'
 import planoEnsinoReducer from './planoEnsinoReducer'
 import cursoReducer from './cursoReducer'
+import turmaReducer from './turmaReducer'
 import materiaReducer from './materiaReducer'
 import { combineReducers } from 'redux'
 import { firestoreReducer } from 'redux-firestore';
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   planoensino: planoEnsinoReducer,
   project: projectReducer,
   curso: cursoReducer,
+  turma: turmaReducer,
   materia: materiaReducer,
   firebase: firebaseReducer,
   firestore: firestoreReducer

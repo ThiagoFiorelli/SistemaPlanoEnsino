@@ -14,6 +14,12 @@ const cursoReducer = (state = initState, action) => {
     case 'CREATE_CURSO_ERROR':
       console.log('create project error', action.err);
       return state;
+    case 'DELETE_CURSO':
+      console.log('delete curso', action.curso);
+      return state;
+    case 'DELETE_CURSO_ERROR':
+      console.log('delete curso error', action.err);
+      return state;
     default:
       return state;
   }

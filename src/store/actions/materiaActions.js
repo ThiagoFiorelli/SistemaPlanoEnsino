@@ -17,3 +17,17 @@ export const createMateria = (materia) => {
     });
   }
 };
+
+export const deleteMateria = (materia) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+     
+    // make async call to database
+    const firestore = getFirestore();
+    firestore.collection('materias').doc(materia).delete().then(() => {
+      dispatch({ type: 'DELETE_MATERIA', materia });
+    }).catch((err) => {
+      dispatch({ type: 'DELETE_MATERIA_ERROR', err });
+    });
+ 
+  }
+};

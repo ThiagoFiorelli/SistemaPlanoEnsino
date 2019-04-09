@@ -1,12 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createCurso } from '../../store/actions/cursoActions'
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import Select from 'react-select'
 import { Redirect } from 'react-router-dom'
 
+let options = []
+var entrou = false
 class CreateCurso extends Component {
   state = {
     nome: '',
-    descricao: ''
+    descricao: '',
+    coordenador: ''
+  }
+  handleChangeOptions = (e) => {
+    this.setState({
+      coordenador: e.label
+    });
   }
   handleChange = (e) => {
     this.setState({
@@ -19,7 +30,16 @@ class CreateCurso extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props;
+    const { auth, coordenadores } = this.props;
+
+    if (coordenadores && !entrou) {
+      coordenadores.forEach(coordenador => {
+        if (coordenador.cargo == "Coordenador") {
+          options = [...options, { value: coordenador.id, label: coordenador.nome }]
+        }
+      });
+      entrou = true
+    }
 
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -36,6 +56,10 @@ class CreateCurso extends Component {
             <label htmlFor="descricao">Descrição</label>
           </div>
           <div className="input-field">
+            <label htmlFor="cargo">Coordenador</label><br /><br />
+            <Select options={options} onChange={this.handleChangeOptions} />
+          </div>
+          <div className="input-field">
             <button className="btn pink lighten-1">Criar</button>
           </div>
         </form>
@@ -46,6 +70,7 @@ class CreateCurso extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    coordenadores: state.firestore.ordered.usuarios,
     auth: state.firebase.auth
   }
 }
@@ -55,4 +80,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCurso)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'usuarios',
+  }])
+)(CreateCurso)

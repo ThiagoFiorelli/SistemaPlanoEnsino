@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const CursoDetail = (props) => {
   const { curso, auth } = props;
@@ -18,9 +19,14 @@ const CursoDetail = (props) => {
             <p>{curso.descricao}</p>
           </div>
 
+          <div className="card-content">
+            <label>Coordenador:</label>
+            <p>{curso.coordenador}</p>
+          </div>
+
           <div className="card-action grey lighten-4 grey-text">
             <div>Postado por {curso.authorFirstName} {curso.authorLastName}</div>
-            <div>Uma data aqui</div>
+            <div>{moment(curso.createdAt.toDate()).calendar()}</div>
           </div>
 
         </div>

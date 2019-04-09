@@ -1,1 +1,2 @@
 npm install react react-redux firebase bootstrap react-dom redux-thunk redux-firestore react-redux-firebase moment
+npm install -g firebase-tools
