@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+SistemaPlanoEnsino\functions\node_modules
 /node_modules
 /.pnp
 .pnp.js
@@ -23,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 firebase-config.env
 .env
+functions/node_modules/.bin/gcs-upload
