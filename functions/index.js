@@ -21,3 +21,47 @@ exports.projectCreated = functions.firestore.document('projects/{projectId}').on
 
     return createNotification(notification);
 })
+
+exports.materiaCreated = functions.firestore.document('materias/{materiaId}').onCreate(doc => {
+    const project = doc.data();
+    const notification = {
+        content: 'Adicionou uma materia',
+        user: `${project.authorFirstName} ${project.authorLastName}`,
+        time: admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    return createNotification(notification);
+})
+
+exports.cursoCreated = functions.firestore.document('cursos/{cursoId}').onCreate(doc => {
+    const project = doc.data();
+    const notification = {
+        content: 'Adicionou um curso',
+        user: `${project.authorFirstName} ${project.authorLastName}`,
+        time: admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    return createNotification(notification);
+})
+
+exports.turmaCreated = functions.firestore.document('turma/{turmaId}').onCreate(doc => {
+    const project = doc.data();
+    const notification = {
+        content: 'Adicionou uma turma',
+        user: `${project.authorFirstName} ${project.authorLastName}`,
+        time: admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    return createNotification(notification);
+})
+
+exports.planoCreated = functions.firestore.document('planosensino/{planoId}').onCreate(doc => {
+    const project = doc.data();
+    const notification = {
+        content: 'Adicionou um plano de ensino',
+        user: `${project.authorFirstName} ${project.authorLastName}`,
+        time: admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    return createNotification(notification);
+})
