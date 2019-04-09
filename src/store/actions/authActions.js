@@ -37,7 +37,7 @@ export const signUp = (newUser) => {
                 sobrenome: newUser.lastName,
                 iniciais: newUser.firstName[0] + newUser.lastName[0],
                 cpf: newUser.cpf,
-                //cargo
+                cargo: newUser.cargo
             })
         }).then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' })

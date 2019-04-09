@@ -14,6 +14,12 @@ const initState = {
       case 'CREATE_MATERIA_ERROR':
         console.log('create materia error', action.err);
         return state;
+      case 'DELETE_MATERIA':
+        console.log('delete materia', action.materia);
+        return state;
+      case 'DELETE_MATERIA_ERROR':
+        console.log('delete materia error', action.err);
+        return state;
       default:
         return state;
     }

@@ -3,21 +3,21 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { createPlanoEnsino } from '../../store/actions/planoEnsinoActions'
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
 import { Redirect } from 'react-router-dom';
+import Select from 'react-select'
 
-let options = [{ value: 'teste1', label: 'teste1' }, { value: 'teste2', label: 'teste2' }]
-
+let options = []
+var entrou = false
 class CreatePlanoEnsino extends Component {
+  
   state = {
     nome: '',
     descricao: '',
     materias: ''
   }
   handleChangeOptions = (e) => {
-    this.setState({
-      materias: e.value.props.value
+      this.setState({
+      materias: e.label
     });
   }
   handleChange = (e) => {
@@ -31,9 +31,17 @@ class CreatePlanoEnsino extends Component {
     this.props.createPlanoEnsino(this.state);
     this.props.history.push('/');
   }
+  
   render() {
     const { auth, materias } = this.props;
-
+    
+    if(materias && !entrou){
+      materias.forEach(materia =>{
+        options = [...options,{value: materia.id, label: materia.nome}]
+      });
+      entrou = true
+    }
+    
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
@@ -46,11 +54,12 @@ class CreatePlanoEnsino extends Component {
           </div>
           <div className="input-field">
             <label htmlFor="cargo">Matérias</label><br /><br />
-            <Dropdown options={options} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" />
+            {/* <Dropdown options={listMaterias} onChange={this.handleChangeOptions} value={options[0]} placeholder="Select an option" /> */}
+            <Select options={options} onChange={this.handleChangeOptions}/>
           </div>
           <div className="input-field">
             <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
-            <label htmlFor="descricao">Descrição do semestre</label>
+            <label htmlFor="descricao">Descrição</label>
           </div>
           <div className="input-field">
             <button className="waves-effect waves-light btn blue-grey lighten-4">Criar</button>

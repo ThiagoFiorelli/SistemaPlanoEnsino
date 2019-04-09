@@ -2,11 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createMateria } from '../../store/actions/materiaActions'
 import { Redirect } from 'react-router-dom'
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import Select from 'react-select'
 
+let options = []
+var entrou = false
 class CreateMateria extends Component {
   state = {
     nome: '',
-    peso: ''
+    semestre: '',
+    peso: '',
+    cursos: ''
+  }
+  handleChangeOptions = (e) => {
+    this.setState({
+      coordenador: e.label
+    });
   }
   handleChange = (e) => {
     this.setState({
@@ -19,7 +31,15 @@ class CreateMateria extends Component {
     this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props;
+    const { auth, cursos } = this.props;
+
+    if (cursos && !entrou) {
+      cursos.forEach(curso => {
+        options = [...options, { value: curso.id, label: curso.nome }]
+      });
+      entrou = true
+    }
+
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
@@ -31,11 +51,19 @@ class CreateMateria extends Component {
             <label htmlFor="nome">Nome</label>
           </div>
           <div className="input-field">
+            <input type="text" id="semestre" onChange={this.handleChange} required></input>
+            <label htmlFor="peso">Semestre</label>
+          </div>
+          <div className="input-field">
             <input type="number" id="peso" className="materialize-number" min="0" max="10" onChange={this.handleChange} required></input>
             <label htmlFor="peso">Peso</label>
           </div>
           <div className="input-field">
-            <button className="waves-effect waves-light btn blue-grey lighten-4">Criar</button>
+            <label htmlFor="cargo">Cursos</label><br /><br />
+            <Select options={options} onChange={this.handleChangeOptions} />
+          </div>
+          <div className="input-field">
+            <button className="btn pink lighten-1">Criar</button>
           </div>
         </form>
       </div>
@@ -45,6 +73,7 @@ class CreateMateria extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    cursos: state.firestore.ordered.cursos,
     auth: state.firebase.auth
   }
 }
@@ -54,4 +83,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMateria)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{
+    collection: 'cursos',
+  }])
+)(CreateMateria)
