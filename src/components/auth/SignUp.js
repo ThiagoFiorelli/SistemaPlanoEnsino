@@ -120,7 +120,7 @@ class SignUp extends Component {
           </div>
 
           <div className="input-field">
-            <button className="btn blue darken-3 z-depth-0">Cadastrar</button>
+            <button className="waves-effect waves-light btn blue-grey lighten-4">Cadastrar</button>
             <div className="red-text center">
               {authError ? <p>{authError}</p> : null}
             </div>

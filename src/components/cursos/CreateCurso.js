@@ -36,7 +36,7 @@ class CreateCurso extends Component {
             <label htmlFor="descricao">Descrição</label>
           </div>
           <div className="input-field">
-            <button className="btn blue darken-3">Criar</button>
+            <button className="waves-effect waves-light btn blue-grey lighten-4">Criar</button>
           </div>
         </form>
       </div>
