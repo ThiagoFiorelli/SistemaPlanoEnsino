@@ -7,6 +7,7 @@ const SignedInLinks = (props) => {
   return (
     <ul className="right">
       <li><NavLink to='/cadastroplanoensino'>Cadastrar Planos de Ensino</NavLink></li>
+      <li><NavLink to='/cadastroturma'>Cadastrar Turma</NavLink></li>
       <li><NavLink to='/cadastromateria'>Cadastrar Materia</NavLink></li>
       <li><NavLink to='/cadastrocurso'>Cadastrar Curso</NavLink></li>
       <li><a onClick={props.signOut}>Sair</a></li>

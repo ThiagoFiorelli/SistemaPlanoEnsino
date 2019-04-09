@@ -17,9 +17,9 @@ class SignUp extends Component {
   }
 
   handleChangeOptions = (e) => {
-    console.log(e);
+    console.log(e.target.value);
     this.setState({
-      cargo: e
+      cargo: e.target.value
     });
   }
 
@@ -74,20 +74,34 @@ class SignUp extends Component {
           <div className="input-field">
             <label htmlFor="cargo">Cargo</label><br/><br/>
             <div className="input-field col-md-12">
-              <p>
+              <div id="cargo" className="radio-buttons" onChange={this.handleChangeOptions}>
                 <label className="input-field col-md-4">
-                  <input type="checkbox" />
+                  <input type="radio" value="Administrador" name="cargo"/>
                   <span>Administrador</span>
                 </label>
                 <label className="input-field col-md-4">
-                  <input type="checkbox" />
+                  <input type="radio" value="Coordenador" name="cargo"/>
                   <span>Coordenador</span>
                 </label>
                 <label className="input-field col-md-4">
-                  <input type="checkbox" />
+                  <input type="radio" value="Professor" name="cargo"/>
                   <span>Professor</span>
                 </label>
-              </p>
+
+                {/* <label className="input-field col-md-4">
+                  <input type="checkbox" value="Administrador" name="cargo"/>
+                  <span>Administrador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" value="Coordenador" name="cargo"/>
+                  <span>Coordenador</span>
+                </label>
+                <label className="input-field col-md-4">
+                  <input type="checkbox" value="Professor" name="cargo"/>
+                  <span>Professor</span>
+                </label> */}
+
+              </div>
             </div>
           </div>
 

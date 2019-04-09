@@ -33,8 +33,10 @@ class CreateCurso extends Component {
     const { auth, coordenadores } = this.props;
 
     if(coordenadores && !entrou){
-      coordenadores.map(coordenador =>{
-        options = [...options,{value: coordenador.id, label: coordenador.nome}]
+      coordenadores.forEach(coordenador =>{
+        if(coordenador.cargo == "Coordenador"){
+          options = [...options,{value: coordenador.id, label: coordenador.nome}]
+        }
       });
       entrou = true
     }

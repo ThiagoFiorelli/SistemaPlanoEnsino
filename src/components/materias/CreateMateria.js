@@ -34,7 +34,7 @@ class CreateMateria extends Component {
     const { auth, cursos } = this.props;
 
     if(cursos && !entrou){
-      cursos.map(curso =>{
+      cursos.forEach(curso =>{
         options = [...options,{value: curso.id, label: curso.nome}]
       });
       entrou = true

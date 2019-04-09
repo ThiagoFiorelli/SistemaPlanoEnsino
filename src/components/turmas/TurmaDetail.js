@@ -14,10 +14,20 @@ const TurmaDetail = (props) => {
       <div className="container section turma-details">
         <div className="card z-depth-0">
           <div className="card-content">
-            <span className="card-title">{turma.nome}</span>
-            <p>{turma.descricao}</p>
+            <span className="card-title">{turma.codigoTurma}</span>
           </div>
-
+          <div className="card-content">
+            <label>Professor:</label>
+            <p>{turma.professor}</p>
+          </div>
+          <div className="card-content">
+            <label>Periodo:</label>
+            <p>{turma.periodo}</p>
+          </div>
+          <div className="card-content">
+            <label>Matéria:</label>
+            <p>{turma.materia}</p>
+          </div>
           <div className="card-action grey lighten-4 grey-text">
             <div>Postado por {turma.authorFirstName} {turma.authorLastName}</div>
             <div>Uma data aqui</div>

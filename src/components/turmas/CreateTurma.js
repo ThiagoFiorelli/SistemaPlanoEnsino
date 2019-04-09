@@ -13,7 +13,8 @@ const optionsPeriodo = [
   { value: 'Vespertino', label: 'Vespertino' },
   { value: 'Noturno', label: 'Noturno' }
 ]
-var entrou = false
+var entrouMateria = false
+var entrouProfessor = false
 let optionsMateria = []
 let optionsProfessor = []
 class CreateTurma extends Component {
@@ -51,18 +52,20 @@ class CreateTurma extends Component {
   render() {
     const { auth, materias, professores } = this.props;
 
-    if(materias && !entrou){
-      materias.map(materia =>{
+    if(materias && !entrouMateria){
+      materias.forEach(materia =>{
         optionsMateria = [...optionsMateria,{value: materia.id, label: materia.nome}]
       });
-      entrou = true
+      entrouMateria = true
     }
 
-    if(professores && !entrou){
-      professores.map(professor =>{
-        optionsProfessor = [...optionsProfessor,{value: professor.id, label: professor.nome}]
+    if(professores && !entrouProfessor){
+      professores.forEach(professor =>{
+        if(professor.cargo == "Professor"){
+          optionsProfessor = [...optionsProfessor,{value: professor.id, label: professor.nome}]
+        }
       });
-      entrou = true
+      entrouProfessor = true
     }
 
     if (!auth.uid) return <Redirect to='/signin' />

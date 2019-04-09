@@ -36,7 +36,7 @@ class CreatePlanoEnsino extends Component {
     const { auth, materias } = this.props;
     
     if(materias && !entrou){
-      materias.map(materia =>{
+      materias.forEach(materia =>{
         options = [...options,{value: materia.id, label: materia.nome}]
       });
       entrou = true
