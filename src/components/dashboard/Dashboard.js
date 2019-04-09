@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 
 class Dashboard extends Component {
   render() {
-    const { projects, cursos, materias, planosensino, auth } = this.props;
+    const { projects, cursos, materias, planosensino, auth, notifications } = this.props;
 
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -31,7 +31,7 @@ class Dashboard extends Component {
             <PlanoEnsinoList planosensino={planosensino} />
           </div>
           <div className="col s12 m5 offset-m1">
-            <Notifications />
+            <Notifications notifications={notifications} />
           </div>
         </div>
       </div>
@@ -45,22 +45,26 @@ const mapStateToProps = (state) => {
     cursos: state.firestore.ordered.cursos,
     materias: state.firestore.ordered.materias,
     planosensino: state.firestore.ordered.planosensino,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    notifications: state.firestore.ordered.notifications
   }
 }
 
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([
-    { collection: 'projects' }
+    { collection: 'projects', orderBy: ['createdAt', 'desc'] }
   ]),
   firestoreConnect([
-    { collection: 'cursos' }
+    { collection: 'cursos', orderBy: ['createdAt', 'desc'] }
   ]),
   firestoreConnect([
-    { collection: 'materias' }
+    { collection: 'materias', orderBy: ['createdAt', 'desc'] }
   ]),
   firestoreConnect([
-    { collection: 'planosensino' }
+    { collection: 'planosensino', orderBy: ['createdAt', 'desc'] }
+  ]),
+  firestoreConnect([
+    { collection: 'notifications', limit: 5, orderBy: ['time', 'desc'] }
   ])
 )(Dashboard)
