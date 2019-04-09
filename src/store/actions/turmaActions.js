@@ -2,6 +2,8 @@ export const createTurma = (turma) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to database
     const firestore = getFirestore();
+    const profile = getState().firebase.profile;
+    const authorId = getState().firebase.auth.uid;
     firestore.collection('turmas').add({
       ...turma,
       authorFirstName: profile.nome,
