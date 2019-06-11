@@ -6,6 +6,10 @@ import { createPlanoAula } from '../../store/actions/planoAulaActions'
 import { Redirect } from 'react-router-dom';
 import Select from 'react-select'
 import ReactToExcel from 'react-html-table-to-excel'
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
+import { Alert } from 'reactstrap';
+
 
 let options = []
 var entrou = false
@@ -42,7 +46,7 @@ class AulaTable extends React.Component {
                     <td>{planoaula.semana}</td>
                     <td>{planoaula.toup}</td>
                     <td>{planoaula.bibliografia}</td>
-                    <td>{planoaula.materias}</td>
+                    <td>{planoaula.materia}</td>
                     <td>{planoaula.email}</td>
                     <td>{planoaula.data}</td>
                     <td>{planoaula.conteudo}</td>
@@ -69,24 +73,38 @@ class AulaTable extends React.Component {
   }
 }
 
+const withErrorHandling = WrappedComponent => ({ showError, children }) => {
+  return (
+    <WrappedComponent>
+      {showError && <Alert color="danger">Selecione uma turma para prosseguir.</Alert>}
+      {children}
+    </WrappedComponent>
+  );
+};
+
 class CreatePlanoAula extends Component {
-  
-  state = {
-    turma: '',
-    materia: '',
-    professor: '',
-    email: '',
-    semana: '',
-    data: '',
-    conteudo: '',
-    bibliografia: '',
-    toup: '',
-    descricao: ''
+  constructor(props){
+    super(props);
+    
+    this.state = { blocking: false,
+                   showError: false,
+                   turma: '',
+                   materia: '',
+                   professor: '',
+                   email: '',
+                   semana: '',
+                   data: '',
+                   conteudo: '',
+                   bibliografia: '',
+                   toup: '',
+                   descricao: ''}
   }
+
   handleChangeOptions = (e) => {
     const turmas = this.props.turmas;
     turmas.map(turma => {
       if(turma.id == e.value){
+        console.log(turma.materia)
         this.setState({
           turma: e.label,
           materia: turma.materia,
@@ -96,22 +114,36 @@ class CreatePlanoAula extends Component {
         });
       }
     });
-    console.log(this.state)
   }
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
+  confirmarTurma = () => {
+    if(this.state.turma){
+      this.setState(prevState => ({
+        blocking: !prevState.blocking,
+        showError: false
+      }))
+    }
+    else{
+      this.setState(prevState => ({
+        showError: true
+      }))
+    }  
+  }
   
   handleSubmit = (e) => {
-    console.log(this.state);
     e.preventDefault();
     this.props.createPlanoAula(this.state);
-    window.location.reload();
+   // window.location.reload();
   }
   
   render() {
+    
+    const DivWithErrorHandling = withErrorHandling(({children}) => <div>{children}</div>)
     const { auth, turmas, planosaula } = this.props;
     if(turmas && !entrou){
       turmas.forEach(turma =>{
@@ -124,64 +156,76 @@ class CreatePlanoAula extends Component {
 
     return (
       <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
+        <form className="white col s6" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Cadastro de Plano de Aula</h5>
-          <div className="row">
-          <div className="col m12">
-          <div className="input-field">
-            <label htmlFor="cargo">Turma</label><br /><br />
-            <Select options={options} onChange={this.handleChangeOptions}/>
-          </div>
-          <div className="input-field">
-            <input type="text" id='email' onChange={this.handleChange} />
-            <label htmlFor="nome">E-mail</label>
-          </div>
-          </div>
-          <div className="col m12">
-          <div className="input-field">
-          <label htmlFor="cargo">Professor</label><br />
-            <input type="text" id='professor' value={this.state.professor} disabled/>
-          </div>
-          <div className="input-field">
-          <label htmlFor="cargo">Matéria</label><br />
-            <input type="text" id='materia' value={this.state.materia} disabled/>
-          </div>
-          </div>
-          <div className="col m12">
-          <div className="input-field">
-            <input type="text" id='semana' onChange={this.handleChange} />
-            <label htmlFor="nome">Semana</label>
-          </div>
-          <div className="input-field">
-            <input type="text" id='data' onChange={this.handleChange} />
-            <label htmlFor="nome">Data</label>
-          </div>
-          </div>
-          <div className="col m12">
-          <div className="input-field">
-            <input type="text" id='toup' onChange={this.handleChange} />
-            <label htmlFor="nome">Teoria ou Prática</label>
-          </div>
-          <div className="input-field">
-            <input type="text" id='conteudo' onChange={this.handleChange} />
-            <label htmlFor="nome">Conteúdo</label>
-          </div>
-          </div>
-          <div className="col m12">
-          <div className="input-field">
-            <input type="text" id='bibliografia' onChange={this.handleChange} />
-            <label htmlFor="nome">Bibliografia</label>
-          </div>
-          <div className="input-field">
-            <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
-            <label htmlFor="descricao">Descrição</label>
-          </div>
-          </div>
-          </div>
-          
-          <div className="input-field">
-            <button className="waves-effect waves-light btn blue-grey lighten-4">Criar</button>
-          </div>
+            
+            <BlockUi tag="div" blocking={this.state.blocking}>
+            <DivWithErrorHandling showError={this.state.showError}></DivWithErrorHandling>
+            <div className="row">
+              <div className="col s6">
+                <div className="input-field">
+                  <label htmlFor="cargo">Turma</label><br /><br />
+                  <Select options={options} onChange={this.handleChangeOptions}/>
+                </div>
+                <div className="input-field">
+                  <label htmlFor="cargo">Professor</label><br />
+                  <input type="text" id='professor' value={this.state.professor} disabled/>
+                </div>
+                  <div className="input-field">
+                  <label htmlFor="cargo">Matéria</label><br />
+                  <input type="text" id='materia' value={this.state.materia} disabled/>
+                </div>
+              </div>
+            </div>
+            <div className="input-field">
+              <a href="#"className="waves-effect waves-light btn blue-grey lighten-4" onClick={this.confirmarTurma}>Confirmar</a>
+            </div>
+            </BlockUi>
+
+            <BlockUi tag="div" blocking={!this.state.blocking} message="Selecione a turma para prosseguir">
+            <div className="row">
+              <div className="col s12">
+                <div className="input-field">
+                  <input type="text" id='semana' onChange={this.handleChange}/>
+                  <label htmlFor="nome">Semana</label>
+                </div>
+                <div className="input-field">
+                  <input type="date" id='data'  onChange={this.handleChange} />
+                  <label htmlFor="nome">Data</label>
+                </div>
+              </div>
+              <div className="col s12">
+                <div className="input-field">
+                  <input type="text" id='toup' onChange={this.handleChange} />
+                  <label htmlFor="nome">Teoria ou Prática</label>
+                </div>
+                <div className="input-field">
+                  <input type="text" id='conteudo' onChange={this.handleChange} />
+                  <label htmlFor="nome">Conteúdo</label>
+                </div>
+              </div>
+              <div className="col s12">
+                <div className="input-field">
+                  <input type="text" id='bibliografia' onChange={this.handleChange} />
+                  <label htmlFor="nome">Bibliografia</label>
+                </div>
+                <div className="input-field">
+                  <textarea id="descricao" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                  <label htmlFor="descricao">Descrição</label>
+                </div>
+              </div>
+              <div className="col s12">
+                <div className="input-field">
+                  <input type="email" id='email' onChange={this.handleChange} />
+                  <label htmlFor="nome">E-mail</label>
+                </div>
+              </div>
+            </div>
+            <div className="input-field">
+              <button className="waves-effect waves-light btn blue-grey lighten-4">Adicionar</button>
+            </div>
+            </BlockUi>
+ 
         </form>
         <AulaTable planosaula={planosaula}/>
       </div>
