@@ -14,7 +14,7 @@ A finalidade da Aplicação é auxiliar na criação e gestão de Planos de Aula
 
 ## 2. Desenvolvimento
 
-O Sistema foi desenvolvido durante o período de aulas e também fora da faculdade, no decorrer do período desde o Início das aulas até a data final de entrega, 11/06/2019, com uma etrega parcial no dia 09 de Abril de 2019, tendo como etapas: a definição dos Atributos do Banco de Dados, pesquisa sobre as tecnologias que melhor atenderiam às necessidades do Projeto, e enfim o desenvolvimento das funcionalidades.
+O Sistema foi desenvolvido durante o período de aulas e também fora da faculdade, no decorrer do período desde o Início das aulas até a data final de entrega, 11 de Junho de2019, com uma entrega parcial no dia 09 de Abril de 2019, tendo como etapas: a definição dos Atributos do Banco de Dados, pesquisa sobre as tecnologias que melhor atenderiam às necessidades do Projeto, e enfim o desenvolvimento das funcionalidades.
 
 As tecnologias utilizadas foram ReactJS e Firebase. Elas foram escolhidas pelo interesse do grupo em seus aprendizados, pois são tecnologias novas, difundidas atualmente em ambientes de desenvolvimento, além de serem mais didáticas e possuírem uma maior facilidade para seu entendimento.
 
