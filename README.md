@@ -1,68 +1,101 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sistema de Gerenciamento de Planos de Aula e de Ensino
 
-## Available Scripts
+## Desenvolvido por:
 
-In the project directory, you can run:
+- **Ariel Vitor Molina - R.A. 160034**
+- **Thiago G. S. Fiorelli - R.A. 160018**
+- **Vitor G. de O. Pelegrinetti - R.A. 160015**
 
-### `npm start`
+## 1. Objetivo:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Este documento tem como finalidade instruir o Usuário em como utilizar o Sistema de Gerenciamento de Planos de Aulas e Ensino, desenvolvido para a disciplina de **Desenvolvimento de Aplicações para WEB – LAB**.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+A finalidade da Aplicação é auxiliar na criação e gestão de Planos de Aulas e Planos de Ensino, que atualmente são entregues como documentos. A Aplicação pretende facilitar neste ponto, fazendo com que a criação, publicação e possível replicação destes documentos sejam feitas de forma centralizada.
 
-### `npm test`
+## 2. Desenvolvimento
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+O Sistema foi desenvolvido durante o período de aulas e também fora da faculdade, no decorrer do período desde o Início das aulas até a data final de entrega, 11/06/2019, com uma etrega parcial no dia 09 de Abril de 2019, tendo como etapas: a definição dos Atributos do Banco de Dados, pesquisa sobre as tecnologias que melhor atenderiam às necessidades do Projeto, e enfim o desenvolvimento das funcionalidades.
 
-### `npm run build`
+As tecnologias utilizadas foram ReactJS e Firebase. Elas foram escolhidas pelo interesse do grupo em seus aprendizados, pois são tecnologias novas, difundidas atualmente em ambientes de desenvolvimento, além de serem mais didáticas e possuírem uma maior facilidade para seu entendimento.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 3. Desenvolvimento
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Para poder utilizar o Sistema, cada usuário deve possuir um cadastro próprio, sendo que cada usuário tem um nível de permissões pré-determinado que permite-o acessar ou não diferentes recursos. Estes papéis são:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Administrador**: Responsável pela criação de novos usuários e inserção de Cursos na Base de Dados;
+- **Coordenador**: Responsável pelo cadastro de Disciplinas e Turmas, além de avaliar os documentos enviados pelos professores;
+- **Professor**: Responsável por cadastrar e editar os Planos de Aulas e Ensino, além de submetê-los à aprovação do Coordenador do Curso.
 
-### `npm run eject`
+Determinados estes papéis, cada usuário poderá utilizar uma série de ferramentas que melhor atendam às suas necessidades.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Seguem abaixo as explicações sobre o funcionamento individual das funcionalidades do Sistema:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Login
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![Tela de Login](https://i.imgur.com/Yrqpt0h.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Ao inicializar a aplicação, esta é a primeira tela apresentada. O usuário deve efetuar seu Login para acessar o sistema, e caso não haja cadastros, deverá ser realizado o cadastro de um novo usuário.
 
-## Learn More
+A Barra de Ferramentas contém as opções **Cadastrar** e **Entrar**, e estas opções aparecem apenas quando o usuário não está logado no Sistema.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Cadastro de Usuários
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Tela de Cadastro de Usuários](https://i.imgur.com/nagoWUD.png)
 
-### Code Splitting
+É nesta tela que ocorrem os cadastros de qualquer usuário que terá acesso ao sistema.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Devem-se fornecer: E-mail (com o campo similar ao do HTML5, havendo verificação de, por exemplo, a existência de um ‘@’ no endereço digitado), Senha, Nome, Sobrenome e CPF.
 
-### Analyzing the Bundle Size
+Em seguida, deve-se selecionar o papel deste usuário no Sistema, podendo-se, por exemplo, selecionar mais de uma opção onde aplicável (um Professor que também seja Coordenador de um Curso, por exemplo).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Tela Principal
 
-### Making a Progressive Web App
+![Home](https://i.imgur.com/N6Bfxbr.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Esta é a Home para Usuários que estejam logados no Sistema. A Barra de Ferramentas agora conta com novas funcionalidades:
 
-### Advanced Configuration
+- Cadastrar Plano de Ensino;
+- Cadastrar Matéria;
+- Cadastrar Curso;
+- Sair do Sistema (simbolizado pelo botão de desligar).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Também nesta Barra de Ferramentas encontram-se as iniciais de quem está atualmente logado.
 
-### Deployment
+As opções mostradas nesta tela são:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- Turmas;
+- Matérias;
+- Cursos;
+- Planos de Ensino cadastrados.
 
-### `npm run build` fails to minify
+E ao lado destas opções, há uma área de Notificações, onde um Professor, por exemplo, poderá receber a informação de que seu Plano de Ensino foi aceito ou recusado por um Coordenador.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Detalhes
+
+![Detalhes](https://i.imgur.com/2uBZaHI.png)
+
+Ao se clicar em alguma das opções da Home Page, o Usuário pode ver os detalhes da mesma. No exemplo mostrado acima, estão os detalhes da Turma CLO01.
+
+### Cadastrar Curso (Administrador)
+
+![Cadastro de Cursos](https://i.imgur.com/btyJCHL.png)
+
+Aqui um Administrador pode cadastrar Cursos e delegar seu Coordenador. Deve-se adicionar um Nome e Descrição para o novo Curso.
+
+### Cadastrar Matéria (Administrador / Coordenador)
+
+![Cadastro de Matérias](https://i.imgur.com/40tLAuJ.png)
+
+Assim como no cadastro de Curso, deve ser informado um Nome à Matéria cadastrada. Também deve ser informado a que semestre ela pertencerá, para futuro reaproveitamento de Planos de Aula, seu Peso (especialmente para Matérias com componentes Teóricas e Práticas), e adicionar Cursos à esta Disciplina, além de qual o Semestre que a mesma será ministrada.
+
+### Cadastrar Turma
+
+![Cadastro de Turmas](https://i.imgur.com/kHRYrBl.png)
+
+O cadastro de Turma contém mais informações, necessitando de um Código e um Professor que será responsável por ela, além do período da mesma e a qual Matéria pertence.
+
+### Cadastrar Planos de Ensino
+
+![Cadastro de Plano de Ensino](https://i.imgur.com/hTJbg4W.png)
+
+O Professor pode escolher a qual Matéria o Plano de Ensino em questão pertencerá (assim, caso hajam diferentes Turmas para a mesma Disciplina, ambas terão o mesmo Plano de Ensino).
