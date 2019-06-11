@@ -36,17 +36,17 @@ class AulaTable extends React.Component {
               
               { planosaula && planosaula.map(planoaula => {
                 return (
-                  <tr>
-                    <td key={planoaula.id}>{planoaula.turma}</td>
-                    <td key={planoaula.id}>{planoaula.professor}</td>
-                    <td key={planoaula.id}>{planoaula.semana}</td>
-                    <td key={planoaula.id}>{planoaula.toup}</td>
-                    <td key={planoaula.id}>{planoaula.bibliografia}</td>
-                    <td key={planoaula.id}>{planoaula.materias}</td>
-                    <td key={planoaula.id}>{planoaula.email}</td>
-                    <td key={planoaula.id}>{planoaula.data}</td>
-                    <td key={planoaula.id}>{planoaula.conteudo}</td>
-                    <td key={planoaula.id}>{planoaula.descricao}</td>
+                  <tr key={planoaula.id}>
+                    <td >{planoaula.turma}</td>
+                    <td>{planoaula.professor}</td>
+                    <td>{planoaula.semana}</td>
+                    <td>{planoaula.toup}</td>
+                    <td>{planoaula.bibliografia}</td>
+                    <td>{planoaula.materias}</td>
+                    <td>{planoaula.email}</td>
+                    <td>{planoaula.data}</td>
+                    <td>{planoaula.conteudo}</td>
+                    <td>{planoaula.descricao}</td>
                   </tr>
                 )
               })} 
@@ -84,15 +84,26 @@ class CreatePlanoAula extends Component {
     descricao: ''
   }
   handleChangeOptions = (e) => {
-      this.setState({
-      materias: e.label
+    const turmas = this.props.turmas;
+    turmas.map(turma => {
+      if(turma.id == e.value){
+        this.setState({
+          turma: e.label,
+          materia: turma.materia,
+          professor: turma.professor
+        }, function(){
+          
+        });
+      }
     });
+    console.log(this.state)
   }
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+  
   handleSubmit = (e) => {
     console.log(this.state);
     e.preventDefault();
@@ -101,11 +112,10 @@ class CreatePlanoAula extends Component {
   }
   
   render() {
-    const { auth, materias, planosaula } = this.props;
-    console.log(planosaula)
-    if(materias && !entrou){
-      materias.forEach(materia =>{
-        options = [...options,{value: materia.id, label: materia.nome}]
+    const { auth, turmas, planosaula } = this.props;
+    if(turmas && !entrou){
+      turmas.forEach(turma =>{
+        options = [...options,{value: turma.id, label: turma.codigoTurma}]
       });
       entrou = true
     }
@@ -119,22 +129,22 @@ class CreatePlanoAula extends Component {
           <div className="row">
           <div className="col m12">
           <div className="input-field">
-            <input type="text" id='turma' onChange={this.handleChange} />
-            <label htmlFor="nome">Turma</label>
-          </div>
-          <div className="input-field">
-            <label htmlFor="cargo">Matérias</label><br /><br />
+            <label htmlFor="cargo">Turma</label><br /><br />
             <Select options={options} onChange={this.handleChangeOptions}/>
-          </div>
-          </div>
-          <div className="col m12">
-          <div className="input-field">
-            <input type="text" id='professor' onChange={this.handleChange} />
-            <label htmlFor="nome">Professor</label>
           </div>
           <div className="input-field">
             <input type="text" id='email' onChange={this.handleChange} />
             <label htmlFor="nome">E-mail</label>
+          </div>
+          </div>
+          <div className="col m12">
+          <div className="input-field">
+          <label htmlFor="cargo">Professor</label><br />
+            <input type="text" id='professor' value={this.state.professor} disabled/>
+          </div>
+          <div className="input-field">
+          <label htmlFor="cargo">Matéria</label><br />
+            <input type="text" id='materia' value={this.state.materia} disabled/>
           </div>
           </div>
           <div className="col m12">
@@ -180,8 +190,9 @@ class CreatePlanoAula extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state.firestore.ordered)
   return {
-    materias: state.firestore.ordered.materias,
+    turmas: state.firestore.ordered.turmas,
     planosaula: state.firestore.ordered.planosaula,
     auth: state.firebase.auth
   }
@@ -196,7 +207,7 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{
-    collection: 'materias'
+    collection: 'turmas'
   }]),firestoreConnect([
     { collection: 'planosaula', orderBy: ['createdAt', 'desc'] }
   ])

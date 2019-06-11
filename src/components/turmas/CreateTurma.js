@@ -75,7 +75,7 @@ class CreateTurma extends Component {
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Cadastro de Turma</h5>
           <div className="input-field">
-            <input type="text" id='codigoTurma' onChange={this.handleChange} />
+            <input type="text" id='codigoTurma' onChange={this.handleChange}/>
             <label htmlFor="codigoTurma">Código da Turma</label>
           </div>
           <div className="input-field">
