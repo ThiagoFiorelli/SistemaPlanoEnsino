@@ -6,25 +6,25 @@ import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 import ReactToExcel from 'react-html-table-to-excel'
 
-class PlanoEnsinoDetail extends Component {
+class PlanoAulaDetail extends Component {
 
   render() {
-    const { auth, planoensino } = this.props;
+    const { auth, planoaula } = this.props;
 
     if (!auth.uid) return <Redirect to='/signin' />
 
-    if (planoensino) {
+    if (planoaula) {
       return (
-        <div className="container section planoensino-details">
+        <div className="container section planoaula-details">
           <div className="card z-depth-0">
             <div className="card-content">
-              <span className="card-title">{planoensino.nome}</span>
-              <p>{planoensino.descricao}</p>
+              <span className="card-title">{planoaula.nome}</span>
+              <p>{planoaula.descricao}</p>
             </div>
 
             <div className="card-action grey lighten-4 grey-text">
-              <div>Postado por {planoensino.authorFirstName} {planoensino.authorLastName}</div>
-              <div>{moment(planoensino.createdAt.toDate()).calendar()}</div>
+              <div>Postado por {planoaula.authorFirstName} {planoaula.authorLastName}</div>
+              <div>{moment(planoaula.createdAt.toDate()).calendar()}</div>
             </div>
             <div>
               <div className="card-action">
@@ -38,9 +38,9 @@ class PlanoEnsinoDetail extends Component {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{planoensino.nome}</td>
-                    <td>{planoensino.materias}</td>
-                    <td>{planoensino.descricao}</td>
+                    <td>{planoaula.nome}</td>
+                    <td>{planoaula.materias}</td>
+                    <td>{planoaula.descricao}</td>
                   </tr>
                 </tbody>
               </table>
@@ -48,7 +48,7 @@ class PlanoEnsinoDetail extends Component {
                 <ReactToExcel
                 className="waves-effect waves-light btn"
                 table="table-to-xls"
-                filename="planoEnsino"
+                filename="planoAula"
                 sheet="sheet 1"
                 buttonText="Exportar"
                 />
@@ -64,7 +64,7 @@ class PlanoEnsinoDetail extends Component {
 
       return (
         <div className="container center" >
-          <p>Carregando plano de ensino...</p>
+          <p>Carregando plano de aula...</p>
         </div>
       )
     }
@@ -75,10 +75,10 @@ class PlanoEnsinoDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
-  const planosensino = state.firestore.data.planosensino;
-  const planoensino = planosensino ? planosensino[id] : null;
+  const planosaula = state.firestore.data.planosaula;
+  const planoaula = planosaula ? planosaula[id] : null;
   return {
-    planoensino: planoensino,
+    planoaula: planoaula,
     auth: state.firebase.auth
   }
 }
@@ -86,6 +86,6 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([{
-    collection: 'planosensino'
+    collection: 'planosaula'
   }])
-)(PlanoEnsinoDetail)
+)(PlanoAulaDetail)

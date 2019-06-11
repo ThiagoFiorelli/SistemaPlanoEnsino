@@ -7,6 +7,8 @@ import CursoDetail from './components/cursos/CursoDetail';
 import CreateCurso from './components/cursos/CreateCurso';
 import PlanoEnsinoDetail from './components/planoEnsino/PlanoEnsinoDetail';
 import CreatePlanoEnsino from './components/planoEnsino/CreatePlanoEnsino';
+import PlanoAulaDetail from './components/planoAula/PlanoAulaDetail';
+import CreatePlanoAula from './components/planoAula/CreatePlanoAula';
 import MateriaDetail from './components/materias/MateriaDetail';
 import CreateMateria from './components/materias/CreateMateria';
 import TurmaDetail from './components/turmas/TurmaDetail';
@@ -24,6 +26,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route path='/planoensino/:id' component={PlanoEnsinoDetail} />
+            <Route path='/planoaula/:id' component={PlanoAulaDetail} />
             <Route path='/materia/:id' component={MateriaDetail} />
             <Route path='/curso/:id' component={CursoDetail} />
             <Route path='/project/:id' component={ProjectDetail} />
@@ -31,6 +34,7 @@ class App extends Component {
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
             <Route path='/cadastroplanoensino' component={CreatePlanoEnsino} /> 
+            <Route path='/cadastroplanoaula' component={CreatePlanoAula} /> 
             <Route path='/cadastromateria' component={CreateMateria} /> 
             <Route path='/cadastrocurso' component={CreateCurso} />
             <Route path='/cadastroturma' component={CreateTurma} />    
